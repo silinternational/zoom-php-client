@@ -15,12 +15,14 @@ that, ask us and we might be able to add it in for you.
 
 ## Zoom API Docs ##
 
-TODO
+<https://support.zoom.us/hc/en-us/sections/200305463-API>
 
 
 ## Zoom API Authentication ##
 
-TODO
+Zoom uses an API key and secret. See [Getting Started with REST API - Zoom 
+Support Center](https://support.zoom.us/hc/en-us/articles/201363043-Getting-Started-with-REST-API) 
+for details.
 
 
 ## Install ##
