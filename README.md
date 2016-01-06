@@ -1,11 +1,10 @@
-# zoom-php-client
-PHP client to interact with the Zoom API.
+# zoom-php-client #
+PHP client to interact with the [Zoom](https://zoom.us/) API.
 
 We're slowly building out this client as we need the functionality.
 
 This client is built on top of 
-[Guzzle](http://docs.guzzlephp.org/en/latest/index.html), the PHP HTTP Client.
-
+[Guzzle](http://docs.guzzlephp.org/en/latest/index.html), the PHP HTTP Client. 
 Guzzle has a simple way to create API clients by describing the API in a 
 Swagger-like format without the need to implement every method yourself. So 
 adding support for more Zoom APIs is relatively simple. If you want to submit a 
@@ -33,8 +32,23 @@ Installation is simple with [Composer](https://getcomposer.org/):
 
 ## Usage ##
 
-TODO
+Example:
 
+```php
+<?php
+
+use Zoom\UserClient;
+
+$client = new UserClient([
+    'api_key' => 'abc',
+    'api_secret' => '123',
+]);
+
+$user = $client->createUser([
+    'email' => 'test@abc.com',
+    'password' => 'abc123',
+]);
+```
 
 ## Guzzle Service Client Notes ##
 - Tutorial on developing an API client with Guzzle Web Services: 
