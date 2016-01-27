@@ -12,8 +12,8 @@ class UserTest extends \PHPUnit_Framework_TestCase
 {
     public function testAutoCreate()
     {
+        // Arrange:
         $userClient = $this->getUserClient();
-
         $mockBody = Stream::factory(json_encode([
             'email' => 'test@abc.com',
             'id' => 'dsfs23css23',
@@ -42,20 +42,18 @@ class UserTest extends \PHPUnit_Framework_TestCase
             'dept' => 'Engineer',
             'token' => ''
         ]));
-
         $mock = new Mock([
             new Response(200, [], $mockBody),
         ]);
-
-        // Add the mock subscriber to the client.
         $userClient->getHttpClient()->getEmitter()->attach($mock);
 
-        // List users
+        // Act:
         $result = $userClient->autoCreate([
             'email' => 'test@abc.com',
             'password' => 'abc123',
         ]);
-        
+
+        // Assert:
         $this->assertEquals(
             200,
             $result['statusCode'],
@@ -74,8 +72,8 @@ class UserTest extends \PHPUnit_Framework_TestCase
 
     public function testGet()
     {
+        // Arrange:
         $userClient = $this->getUserClient();
-
         $mockBody = Stream::factory(json_encode([
             'email' => 'test@abc.com',
             'id' => 'dsfs23css23',
@@ -106,19 +104,17 @@ class UserTest extends \PHPUnit_Framework_TestCase
             'timezone' => 'America/Los_Angeles',
             'token' => 'adlfjadslfkjasdkljfkjalkadfskjdsafkjdfsajkllajsdfaljsdf'
         ]));
-
         $mock = new Mock([
             new Response(200, [], $mockBody),
         ]);
-
-        // Add the mock subscriber to the client.
         $userClient->getHttpClient()->getEmitter()->attach($mock);
 
-        // List users
+        // Act:
         $result = $userClient->get([
             'id' => 'dsfs23css23',
         ]);
-        
+
+        // Assert:
         $this->assertEquals(
             200,
             $result['statusCode'],
