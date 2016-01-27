@@ -124,6 +124,23 @@
                 ],
             ]
         ],
+        'Get' => [
+            'httpMethod' => 'POST',
+            'uri' => '/{ApiVersion}/user/get',
+            'responseModel' => 'Result',
+            'parameters' => [
+                'ApiVersion' => [
+                    'required' => true,
+                    'type'     => 'string',
+                    'location' => 'uri',
+                ],
+                'id' => [
+                    'required' => true,
+                    'type' => 'string',
+                    'location' => 'json',
+                ],
+            ]
+        ],
     ],
     'models' => [
         'Result' => [
