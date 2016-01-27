@@ -141,6 +141,28 @@
                 ],
             ]
         ],
+        'GetByEmail' => [
+            'httpMethod' => 'POST',
+            'uri' => '/{ApiVersion}/user/getbyemail',
+            'responseModel' => 'Result',
+            'parameters' => [
+                'ApiVersion' => [
+                    'required' => true,
+                    'type'     => 'string',
+                    'location' => 'uri',
+                ],
+                'email' => [
+                    'required' => true,
+                    'type' => 'string',
+                    'location' => 'json',
+                ],
+                'login_type' => [
+                    'required' => true,
+                    'type' => 'integer',
+                    'location' => 'json',
+                ],
+            ]
+        ],
     ],
     'models' => [
         'Result' => [
