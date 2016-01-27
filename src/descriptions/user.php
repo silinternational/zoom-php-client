@@ -2,7 +2,7 @@
     'baseUrl' => 'https://api.zoom.us',
     'apiVersion' => 'v1',
     'operations' => [
-        'AutoCreateUser' => [
+        'AutoCreate' => [
             'httpMethod' => 'POST',
             'uri' => '/{ApiVersion}/user/autocreate',
             'responseModel' => 'Result',

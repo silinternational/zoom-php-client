@@ -10,9 +10,9 @@ use GuzzleHttp\Stream\Stream;
 
 class UserTest extends \PHPUnit_Framework_TestCase
 {
-    public function testAutoCreateUser()
+    public function testAutoCreate()
     {
-        $client = $this->getUserClient();
+        $userClient = $this->getUserClient();
 
         $mockBody = Stream::factory(json_encode([
             'email' => 'test@abc.com',
@@ -48,10 +48,10 @@ class UserTest extends \PHPUnit_Framework_TestCase
         ]);
 
         // Add the mock subscriber to the client.
-        $client->getHttpClient()->getEmitter()->attach($mock);
+        $userClient->getHttpClient()->getEmitter()->attach($mock);
 
         // List users
-        $result = $client->autoCreateUser([
+        $result = $userClient->autoCreate([
             'email' => 'test@abc.com',
             'password' => 'abc123',
         ]);
