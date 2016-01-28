@@ -39,16 +39,19 @@ Example:
 
 use Zoom\UserClient;
 
-$client = new UserClient([
+$userClient = new UserClient([
     'api_key' => 'abc',
     'api_secret' => '123',
 ]);
 
-$user = $client->createUser([
+$user = $userClient->getByEmail([
     'email' => 'test@abc.com',
-    'password' => 'abc123',
+    'login_type' => 100,
 ]);
 ```
+
+Side Note: For the list of possible ```login_type``` values, see Zoom's API 
+documentation (at the link above).
 
 ## Guzzle Service Client Notes ##
 - Tutorial on developing an API client with Guzzle Web Services: 
