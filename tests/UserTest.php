@@ -196,7 +196,7 @@ class UserTest extends \PHPUnit_Framework_TestCase
     private function getUserClient($extra = [])
     {
         $testConfig = include __DIR__ . '/config-test.php';
-        $config = array_merge_recursive($testConfig, $extra);
+        $config = array_replace_recursive($testConfig, $extra);
         
         return new UserClient($config);
     }
