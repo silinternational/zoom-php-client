@@ -22,6 +22,11 @@
                     'type' => 'string',
                     'location' => 'postField',
                 ],
+                'data_type' => [
+                    'required' => false,
+                    'type' => 'string',
+                    'location' => 'postField',
+                ],
                 'email' => [
                     'required' => true,
                     'type' => 'string',
@@ -144,6 +149,11 @@
                     'type' => 'string',
                     'location' => 'postField',
                 ],
+                'data_type' => [
+                    'required' => false,
+                    'type' => 'string',
+                    'location' => 'postField',
+                ],
                 'id' => [
                     'required' => true,
                     'type' => 'string',
@@ -168,6 +178,11 @@
                 ],
                 'api_secret' => [
                     'required' => true,
+                    'type' => 'string',
+                    'location' => 'postField',
+                ],
+                'data_type' => [
+                    'required' => false,
                     'type' => 'string',
                     'location' => 'postField',
                 ],
