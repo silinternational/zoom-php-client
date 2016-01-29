@@ -134,6 +134,16 @@
                     'type'     => 'string',
                     'location' => 'uri',
                 ],
+                'api_key' => [
+                    'required' => true,
+                    'type' => 'string',
+                    'location' => 'postField',
+                ],
+                'api_secret' => [
+                    'required' => true,
+                    'type' => 'string',
+                    'location' => 'postField',
+                ],
                 'id' => [
                     'required' => true,
                     'type' => 'string',
@@ -150,6 +160,16 @@
                     'required' => true,
                     'type'     => 'string',
                     'location' => 'uri',
+                ],
+                'api_key' => [
+                    'required' => true,
+                    'type' => 'string',
+                    'location' => 'postField',
+                ],
+                'api_secret' => [
+                    'required' => true,
+                    'type' => 'string',
+                    'location' => 'postField',
                 ],
                 'email' => [
                     'required' => true,
