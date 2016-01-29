@@ -53,6 +53,31 @@ $user = $userClient->getByEmail([
 Side Note: For the list of possible ```login_type``` values, see Zoom's API 
 documentation (at the link above).
 
+### WARNING: Zoom API SSL Issues ###
+
+When testing this on my Windows 7 PC using a Git Bash console (from Git 2.5), 
+the following error is returned: 
+
+    GuzzleHttp\Command\Exception\CommandException: Error executing command: cURL error 60: See http://curl.haxx.se/libcurl/c/libcurl-errors.html
+
+This appears to mean that whatever SSL CA bundle cURL is using on my computer, 
+it does not contain the root CA that Zoom's API uses. To pass parameters to 
+Guzzle related to this, you can do something like the following: 
+
+    $userClient = $this->getUserClient([
+	    // ...
+        'http_client_options' => [
+            'defaults' => [
+                'verify' => __DIR__ . '/../../ca-bundle.crt',
+            ],
+        ],
+    ]);
+
+In this example, I pointed ```verify``` at a downloaded copy of the 
+[CA bundle](https://raw.githubusercontent.com/bagder/ca-bundle/master/ca-bundle.crt) 
+that Mozilla provides, as mentioned in the Guzzle documentation about the 
+[verify option](http://docs.guzzlephp.org/en/v5/request-options.html#verify-option).
+
 ## Guzzle Service Client Notes ##
 - Tutorial on developing an API client with Guzzle Web Services: 
   http://www.phillipshipley.com/2015/04/creating-a-php-nexmo-api-client-using-guzzle-web-service-client-part-1/
