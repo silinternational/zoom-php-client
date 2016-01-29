@@ -78,6 +78,11 @@ In this example, I pointed ```verify``` at a downloaded copy of the
 that Mozilla provides, as mentioned in the Guzzle documentation about the 
 [verify option](http://docs.guzzlephp.org/en/v5/request-options.html#verify-option).
 
+## Tests ##
+
+To run the unit tests for this, copy the ```/tests/real-test-data.local.php.dist``` 
+file to ```/tests/real-test-data.local.php``` and enter real data to test with.
+
 ## Guzzle Service Client Notes ##
 - Tutorial on developing an API client with Guzzle Web Services: 
   http://www.phillipshipley.com/2015/04/creating-a-php-nexmo-api-client-using-guzzle-web-service-client-part-1/

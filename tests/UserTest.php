@@ -10,7 +10,7 @@ use GuzzleHttp\Stream\Stream;
 
 class UserTest extends \PHPUnit_Framework_TestCase
 {
-    public function testAutoCreate()
+    public function testAutoCreateViaMock()
     {
         // Arrange:
         $userClient = $this->getUserClient();
@@ -70,7 +70,7 @@ class UserTest extends \PHPUnit_Framework_TestCase
         );
     }
 
-    public function testGet()
+    public function testGetViaMock()
     {
         // Arrange:
         $userClient = $this->getUserClient();
@@ -131,7 +131,7 @@ class UserTest extends \PHPUnit_Framework_TestCase
         );
     }
 
-    public function testGetByEmail()
+    public function testGetByEmailViaMock()
     {
         // Arrange:
         $userClient = $this->getUserClient();
@@ -191,6 +191,54 @@ class UserTest extends \PHPUnit_Framework_TestCase
             strtotime($result['created_at']),
             'Failed to receive valid created_at string from mocked API call.'
         );
+    }
+
+    public function testGetByEmail()
+    {
+        // Arrange:
+        $realTestData = $this->getRealTestDataFor('getByEmail');
+        $email = $realTestData['email'];
+        $loginType = $realTestData['login_type'];
+        $expectedId = $realTestData['id'];
+        $userClient = $this->getUserClient([
+            'api_key' => $realTestData['api_key'],
+            'api_secret' => $realTestData['api_secret'],
+            'http_client_options' => $realTestData['http_client_options'],
+        ]);
+
+        // Act:
+        $result = $userClient->getByEmail([
+            'email' => $email,
+            'login_type' => $loginType,
+        ]);
+
+        // Assert:
+        $this->assertEquals(
+            200,
+            $result['statusCode'],
+            'Failed to receive expected HTTP status code from API call.'
+        );
+        $this->assertArrayNotHasKey(
+            'error',
+            $result,
+            'Received error back from API call: ' . json_encode($result)
+        );
+        $this->assertEquals(
+            $expectedId,
+            $result['id'],
+            'Failed to receive expected id from API call.'
+        );
+        $this->assertEquals(
+            $email,
+            $result['email'],
+            'Failed to receive expected email address real API call.'
+        );
+    }
+
+    private function getRealTestDataFor($methodName)
+    {
+        $fullData = require __DIR__ . '/real-test-data.local.php';
+        return $fullData[$methodName];
     }
 
     private function getUserClient($extra = [])
