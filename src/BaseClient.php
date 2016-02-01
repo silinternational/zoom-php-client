@@ -32,6 +32,9 @@ class BaseClient extends GuzzleClient
         // Ensure that the credentials are set.
         $this->applyCredentials($config);
 
+        // Apply the data type (if provided).
+        $this->applyDataType($config);
+
         // Ensure that ApiVersion is set.
         $this->setConfig(
             'defaults/ApiVersion',
@@ -108,5 +111,17 @@ class BaseClient extends GuzzleClient
             'defaults/api_secret',
             $config['api_secret']
         );
+    }
+
+    private function applyDataType(array $config)
+    {
+        // If it's provided, set the data type in a default variable so that we
+        // don't have to pass it to every method individually.
+        if (isset($config['data_type'])) {
+            $this->setConfig(
+                'defaults/data_type',
+                $config['data_type']
+            );
+        }
     }
 }

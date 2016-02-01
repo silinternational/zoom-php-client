@@ -1,0 +1,12 @@
+<?php return [
+    'getByEmail' => [
+        'api_key' => '',
+        'api_secret' => '',
+
+        'http_client_options' => []
+
+        'email' => '',
+        'id' => '',
+        'login_type' => '',
+    ],
+];

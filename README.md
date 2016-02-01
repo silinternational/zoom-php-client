@@ -1,11 +1,10 @@
-# zoom-php-client
-PHP client to interact with the Zoom API.
+# zoom-php-client #
+PHP client to interact with the [Zoom](https://zoom.us/) API.
 
 We're slowly building out this client as we need the functionality.
 
 This client is built on top of 
-[Guzzle](http://docs.guzzlephp.org/en/latest/index.html), the PHP HTTP Client.
-
+[Guzzle](http://docs.guzzlephp.org/en/latest/index.html), the PHP HTTP Client. 
 Guzzle has a simple way to create API clients by describing the API in a 
 Swagger-like format without the need to implement every method yourself. So 
 adding support for more Zoom APIs is relatively simple. If you want to submit a 
@@ -33,8 +32,56 @@ Installation is simple with [Composer](https://getcomposer.org/):
 
 ## Usage ##
 
-TODO
+Example:
 
+```php
+<?php
+
+use Zoom\UserClient;
+
+$userClient = new UserClient([
+    'api_key' => 'abc',
+    'api_secret' => '123',
+]);
+
+$user = $userClient->getByEmail([
+    'email' => 'test@abc.com',
+    'login_type' => 100,
+]);
+```
+
+Side Note: For the list of possible ```login_type``` values, see Zoom's API 
+documentation (at the link above).
+
+### WARNING: Zoom API SSL Issues ###
+
+When testing this on my Windows 7 PC using a Git Bash console (from Git 2.5), 
+the following error is returned: 
+
+    GuzzleHttp\Command\Exception\CommandException: Error executing command: cURL error 60: See http://curl.haxx.se/libcurl/c/libcurl-errors.html
+
+This appears to mean that whatever SSL CA bundle cURL is using on my computer, 
+it does not contain the root CA that Zoom's API uses. To pass parameters to 
+Guzzle related to this, you can do something like the following: 
+
+    $userClient = $this->getUserClient([
+	    // ...
+        'http_client_options' => [
+            'defaults' => [
+                'verify' => __DIR__ . '/../../ca-bundle.crt',
+            ],
+        ],
+    ]);
+
+In this example, I pointed ```verify``` at a downloaded copy of the 
+[CA bundle](https://raw.githubusercontent.com/bagder/ca-bundle/master/ca-bundle.crt) 
+that Mozilla provides, as mentioned in the Guzzle documentation about the 
+[verify option](http://docs.guzzlephp.org/en/v5/request-options.html#verify-option).
+
+## Tests ##
+
+To run the unit tests for this, copy the ```/tests/real-test-data.local.php.dist``` 
+file to ```/tests/real-test-data.local.php``` and enter real data to test with.
 
 ## Guzzle Service Client Notes ##
 - Tutorial on developing an API client with Guzzle Web Services: 

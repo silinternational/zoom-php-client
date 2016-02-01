@@ -8,6 +8,14 @@ namespace Zoom;
  */
 class UserClient extends BaseClient
 {
+    /* Values copied from .../v1/user/getbyemail portion of Zoom API Docs at
+     * "https://support.zoom.us/hc/en-us/articles/201363033-REST-User-API". */
+    const LOGIN_TYPE_SNS_FACEBOOK = 0;
+    const LOGIN_TYPE_SNS_GOOGLE = 1;
+    const LOGIN_TYPE_SNS_API = 99;
+    const LOGIN_TYPE_SNS_ZOOM = 100;
+    const LOGIN_TYPE_SNS_SSO = 101;
+    
     /**
      * @param array $config
      */
