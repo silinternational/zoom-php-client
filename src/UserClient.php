@@ -16,6 +16,12 @@ class UserClient extends BaseClient
     const LOGIN_TYPE_SNS_ZOOM = 100;
     const LOGIN_TYPE_SNS_SSO = 101;
     
+    /* Values copied from .../v1/user/create potion of Zoom API Docs at
+     * "https://support.zoom.us/hc/en-us/articles/201363033-REST-User-API". */
+    const USER_TYPE_BASIC = 1;
+    const USER_TYPE_PRO = 2;
+    const USER_TYPE_CORP = 3; // Corp. is for on-premise deployments.
+    
     /**
      * @param array $config
      */
