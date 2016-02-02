@@ -193,7 +193,51 @@ class UserTest extends \PHPUnit_Framework_TestCase
         );
     }
 
-    public function testGetByEmail()
+    public function testGetByEmail_doesNotExist()
+    {
+        // Arrange:
+        $realTestData = $this->getRealTestDataFor('getByEmail');
+        $nonExistentEmail = 'non_existent_account_@sil.org';
+        $loginType = $realTestData['login_type'];
+        $userClient = $this->getUserClient([
+            'api_key' => $realTestData['api_key'],
+            'api_secret' => $realTestData['api_secret'],
+            'http_client_options' => $realTestData['http_client_options'],
+        ]);
+        
+        // Act:
+        $result = $userClient->getByEmail([
+            'email' => $nonExistentEmail,
+            'login_type' => $loginType,
+        ]);
+
+        // Assert:
+        $this->assertEquals(
+            200,
+            $result['statusCode'],
+            'Failed to receive expected HTTP status code from API call.'
+        );
+        $this->assertArrayHasKey(
+            'error',
+            $result,
+            'Failed to receive error when asking for non-existent user: '
+            . json_encode($result)
+        );
+        $this->assertArrayHasKey(
+            'code',
+            $result['error'],
+            'Failed to receive expected error format from API call (no "code" '
+            . 'field was found): '
+            . json_encode($result)
+        );
+        $this->assertEquals(
+            1001,
+            $result['error']['code'],
+            'Received unexpected error code for non-existent user.'
+        );
+    }
+
+    public function testGetByEmail_exists()
     {
         // Arrange:
         $realTestData = $this->getRealTestDataFor('getByEmail');
