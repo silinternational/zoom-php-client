@@ -237,7 +237,14 @@ class UserTest extends \PHPUnit_Framework_TestCase
 
     private function getRealTestDataFor($methodName)
     {
-        $fullData = require __DIR__ . '/real-test-data.local.php';
+        $testDataFilePath = __DIR__ . '/real-test-data.local.php';
+        
+        $this->assertFileExists(
+            $testDataFilePath,
+            'The file with real test data was not found. Please see README.md.'
+        );
+        
+        $fullData = require $testDataFilePath;
         return $fullData[$methodName];
     }
 
