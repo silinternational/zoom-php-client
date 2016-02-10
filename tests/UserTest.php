@@ -10,7 +10,7 @@ use GuzzleHttp\Stream\Stream;
 
 class UserTest extends \PHPUnit_Framework_TestCase
 {
-    public function testAutoCreateViaMock()
+    public function testAutoCreate_mock_successful()
     {
         // Arrange:
         $userClient = $this->getUserClient();
@@ -70,7 +70,55 @@ class UserTest extends \PHPUnit_Framework_TestCase
         );
     }
 
-    public function testGetViaMock()
+    public function testAutoCreate_mock_userAlreadyExists()
+    {
+        // Arrange:
+        $userClient = $this->getUserClient();
+        $mockBody = Stream::factory(json_encode([
+            'error' => [
+                'code' => 1000,
+                'message' => 'User already in the account: test@abc.com',
+            ]
+        ]));
+        $mock = new Mock([
+            new Response(200, [], $mockBody),
+        ]);
+        $userClient->getHttpClient()->getEmitter()->attach($mock);
+
+        // Act:
+        $result = $userClient->autoCreate([
+            'email' => 'test@abc.com',
+            'password' => 'abc123',
+        ]);
+
+        // Assert:
+        $this->assertEquals(
+            200,
+            $result['statusCode'],
+            'Failed to receive expected HTTP status code from mocked API call: '
+            . json_encode($result)
+        );
+        $this->assertArrayHasKey(
+            'error',
+            $result,
+            'Failed to receive error when asking mock for non-existent user: '
+            . json_encode($result)
+        );
+        $this->assertArrayHasKey(
+            'code',
+            $result['error'],
+            'Failed to receive expected error format from mocked API call (no '
+            . '"code" field was found): '
+            . json_encode($result)
+        );
+        $this->assertEquals(
+            1000,
+            $result['error']['code'],
+            'Received unexpected mocked error code for non-existent user.'
+        );
+    }
+
+    public function testGet_mock()
     {
         // Arrange:
         $userClient = $this->getUserClient();
@@ -131,7 +179,7 @@ class UserTest extends \PHPUnit_Framework_TestCase
         );
     }
 
-    public function testGetByEmailViaMock()
+    public function testGetByEmail_mock()
     {
         // Arrange:
         $userClient = $this->getUserClient();

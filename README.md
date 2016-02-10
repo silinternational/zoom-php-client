@@ -92,3 +92,5 @@ file to ```/tests/real-test-data.local.php``` and enter real data to test with.
   https://github.com/jeremeamia/sunshinephp-guzzle-examples
 - Parameter docs in source comments: 
   https://github.com/guzzle/guzzle-services/blob/master/src/Parameter.php
+- Guzzle 3 Service Descriptions documentation (at least mostly still relevant): 
+  https://guzzle3.readthedocs.org/webservice-client/guzzle-service-descriptions.html
