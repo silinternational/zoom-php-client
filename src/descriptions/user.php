@@ -129,6 +129,38 @@
                 ],
             ]
         ],
+        'CheckEmail' => [
+            'httpMethod' => 'POST',
+            'uri' => '/{ApiVersion}/user/checkemail',
+            'responseModel' => 'Result',
+            'parameters' => [
+                'ApiVersion' => [
+                    'required' => true,
+                    'type'     => 'string',
+                    'location' => 'uri',
+                ],
+                'api_key' => [
+                    'required' => true,
+                    'type' => 'string',
+                    'location' => 'postField',
+                ],
+                'api_secret' => [
+                    'required' => true,
+                    'type' => 'string',
+                    'location' => 'postField',
+                ],
+                'data_type' => [
+                    'required' => false,
+                    'type' => 'string',
+                    'location' => 'postField',
+                ],
+                'email' => [
+                    'required' => true,
+                    'type' => 'string',
+                    'location' => 'postField',
+                ],
+            ]
+        ],
         'Delete' => [
             'httpMethod' => 'POST',
             'uri' => '/{ApiVersion}/user/delete',

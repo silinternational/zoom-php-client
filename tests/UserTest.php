@@ -118,6 +118,35 @@ class UserTest extends \PHPUnit_Framework_TestCase
         );
     }
 
+    public function testCheckEmail_mock()
+    {
+        // Arrange:
+        $userClient = $this->getUserClient();
+        $mockBody = Stream::factory(json_encode([
+            'existed_email' => true,
+        ]));
+        $mock = new Mock([
+            new Response(200, [], $mockBody),
+        ]);
+        $userClient->getHttpClient()->getEmitter()->attach($mock);
+
+        // Act:
+        $result = $userClient->checkEmail([
+            'email' => 'test@abc.com',
+        ]);
+
+        // Assert:
+        $this->assertEquals(
+            200,
+            $result['statusCode'],
+            'Failed to receive expected HTTP status code from mocked API call.'
+        );
+        $this->assertTrue(
+            $result['existed_email'],
+            'Failed to receive expected existed_email value from mocked API call.'
+        );
+    }
+
     public function testDelete_mock_success()
     {
         // Arrange:
