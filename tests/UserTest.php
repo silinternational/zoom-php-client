@@ -118,6 +118,91 @@ class UserTest extends \PHPUnit_Framework_TestCase
         );
     }
 
+    public function testDelete_mock_success()
+    {
+        // Arrange:
+        $userClient = $this->getUserClient();
+        $mockBody = Stream::factory(json_encode([
+            'id' => '65q23kd9sqliy612h23k',
+            'account_id' => '562q23kd9sqliy612h78k',
+            'deleted_at' => '2012-11-25T12:00:00Z',
+        ]));
+        $mock = new Mock([
+            new Response(200, [], $mockBody),
+        ]);
+        $userClient->getHttpClient()->getEmitter()->attach($mock);
+
+        // Act:
+        $result = $userClient->delete([
+            'id' => '65q23kd9sqliy612h23k',
+        ]);
+
+        // Assert:
+        $this->assertEquals(
+            200,
+            $result['statusCode'],
+            'Failed to receive expected HTTP status code from mocked API call.'
+        );
+        $this->assertEquals(
+            '65q23kd9sqliy612h23k',
+            $result['id'],
+            'Failed to receive expected id from mocked API call.'
+        );
+        $this->assertNotFalse(
+            strtotime($result['deleted_at']),
+            'Failed to receive valid deleted_at string from mocked API call.'
+        );
+    }
+
+    public function testDelete_mock_noSuchUser()
+    {
+        // Arrange:
+        $userClient = $this->getUserClient();
+        $mockBody = Stream::factory(json_encode([
+            'error' => [
+                'code' => 1001,
+                'message' => 'User not exist: 65q23kd9sqliy612h23k',
+            ],
+        ]));
+        $mock = new Mock([
+            new Response(200, [], $mockBody),
+        ]);
+        $userClient->getHttpClient()->getEmitter()->attach($mock);
+
+        // Act:
+        $result = $userClient->delete([
+            'id' => '65q23kd9sqliy612h23k',
+        ]);
+
+        // Assert:
+        $this->assertEquals(
+            200,
+            $result['statusCode'],
+            'Failed to receive expected HTTP status code from mocked API call: '
+            . json_encode($result)
+        );
+        $this->assertArrayHasKey(
+            'error',
+            $result,
+            'Failed to receive error when asking mock to delete a non-existent '
+            . 'user: '
+            . json_encode($result)
+        );
+        $this->assertArrayHasKey(
+            'code',
+            $result['error'],
+            'Failed to receive expected error format from mocked API call (no '
+            . '"code" field was found): '
+            . json_encode($result)
+        );
+        $this->assertEquals(
+            1001,
+            $result['error']['code'],
+            'Received unexpected mocked error code for deleting a non-existent '
+            . 'user.'
+        );
+    }
+
     public function testGet_mock()
     {
         // Arrange:

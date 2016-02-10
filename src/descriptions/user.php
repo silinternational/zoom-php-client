@@ -129,6 +129,38 @@
                 ],
             ]
         ],
+        'Delete' => [
+            'httpMethod' => 'POST',
+            'uri' => '/{ApiVersion}/user/delete',
+            'responseModel' => 'Result',
+            'parameters' => [
+                'ApiVersion' => [
+                    'required' => true,
+                    'type'     => 'string',
+                    'location' => 'uri',
+                ],
+                'api_key' => [
+                    'required' => true,
+                    'type' => 'string',
+                    'location' => 'postField',
+                ],
+                'api_secret' => [
+                    'required' => true,
+                    'type' => 'string',
+                    'location' => 'postField',
+                ],
+                'data_type' => [
+                    'required' => false,
+                    'type' => 'string',
+                    'location' => 'postField',
+                ],
+                'id' => [
+                    'required' => true,
+                    'type' => 'string',
+                    'location' => 'postField',
+                ],
+            ]
+        ],
         'Get' => [
             'httpMethod' => 'POST',
             'uri' => '/{ApiVersion}/user/get',
