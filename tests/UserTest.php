@@ -441,6 +441,42 @@ class UserTest extends \PHPUnit_Framework_TestCase
         );
     }
 
+    public function testUpdate_mock()
+    {
+        // Arrange:
+        $userClient = $this->getUserClient();
+        $mockBody = Stream::factory(json_encode([
+            'id' => 'dsfs23css23',
+            'updated_at' => '2013-09-02T12:00:00Z'
+        ]));
+        $mock = new Mock([
+            new Response(200, [], $mockBody),
+        ]);
+        $userClient->getHttpClient()->getEmitter()->attach($mock);
+
+        // Act:
+        $result = $userClient->update([
+            'id' => 'dsfs23css23',
+            'type' => UserClient::USER_TYPE_BASIC,
+        ]);
+
+        // Assert:
+        $this->assertEquals(
+            200,
+            $result['statusCode'],
+            'Failed to receive expected HTTP status code from mocked API call.'
+        );
+        $this->assertEquals(
+            'dsfs23css23',
+            $result['id'],
+            'Failed to receive expected id from mocked API call.'
+        );
+        $this->assertNotFalse(
+            strtotime($result['updated_at']),
+            'Failed to receive valid updated_at string from mocked API call.'
+        );
+    }
+
     private function getRealTestDataFor($methodName)
     {
         $testDataFilePath = __DIR__ . '/real-test-data.local.php';
