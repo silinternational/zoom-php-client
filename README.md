@@ -84,13 +84,13 @@ To run the unit tests for this, copy the ```/tests/real-test-data.local.php.dist
 file to ```/tests/real-test-data.local.php``` and enter real data to test with.
 
 ## Guzzle Service Client Notes ##
-- Tutorial on developing an API client with Guzzle Web Services: 
-  http://www.phillipshipley.com/2015/04/creating-a-php-nexmo-api-client-using-guzzle-web-service-client-part-1/
-- Presentation by Jeremy Lindblom: 
-  https://speakerdeck.com/jeremeamia/building-web-service-clients-with-guzzle-1
-- Example by Jeremy Lindblom: 
-  https://github.com/jeremeamia/sunshinephp-guzzle-examples
-- Parameter docs in source comments: 
-  https://github.com/guzzle/guzzle-services/blob/master/src/Parameter.php
-- Guzzle 3 Service Descriptions documentation (at least mostly still relevant): 
-  https://guzzle3.readthedocs.org/webservice-client/guzzle-service-descriptions.html
+- Tutorial on developing an API client with Guzzle Web Services:  
+  <http://www.phillipshipley.com/2015/04/creating-a-php-nexmo-api-client-using-guzzle-web-service-client-part-1/>
+- Presentation by Jeremy Lindblom:  
+  <https://speakerdeck.com/jeremeamia/building-web-service-clients-with-guzzle-1>
+- Example by Jeremy Lindblom:  
+  <https://github.com/jeremeamia/sunshinephp-guzzle-examples>
+- Parameter docs in source comments:  
+  <https://github.com/guzzle/guzzle-services/blob/master/src/Parameter.php>
+- Guzzle 3 Service Descriptions documentation (at least mostly still relevant):  
+  <https://guzzle3.readthedocs.org/webservice-client/guzzle-service-descriptions.html>
