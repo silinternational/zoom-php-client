@@ -10,7 +10,7 @@ use GuzzleHttp\Stream\Stream;
 
 class UserTest extends \PHPUnit_Framework_TestCase
 {
-    public function testAutoCreateViaMock()
+    public function testAutoCreate_mock_successful()
     {
         // Arrange:
         $userClient = $this->getUserClient();
@@ -70,7 +70,7 @@ class UserTest extends \PHPUnit_Framework_TestCase
         );
     }
 
-    public function testGetViaMock()
+    public function testGet_mock()
     {
         // Arrange:
         $userClient = $this->getUserClient();
@@ -131,7 +131,7 @@ class UserTest extends \PHPUnit_Framework_TestCase
         );
     }
 
-    public function testGetByEmailViaMock()
+    public function testGetByEmail_mock()
     {
         // Arrange:
         $userClient = $this->getUserClient();
