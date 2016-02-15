@@ -4,7 +4,12 @@ namespace Zoom;
 /**
  * Partial Zoom API client implemented with Guzzle.
  *
- * @method array autoCreateUser(array $config = [])
+ * @method array autoCreate(array $config = [])
+ * @method array checkEmail(array $config = [])
+ * @method array delete(array $config = [])
+ * @method array get(array $config = [])
+ * @method array getByEmail(array $config = [])
+ * @method array update(array $config = [])
  */
 class UserClient extends BaseClient
 {
