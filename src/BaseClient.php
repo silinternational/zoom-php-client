@@ -16,11 +16,6 @@ class BaseClient extends GuzzleClient
      */
     public function __construct(array $config = [])
     {
-        // Apply some defaults.
-        $config += [
-            'max_retries' => 3,
-        ];
-
         // Create the client.
         parent::__construct(
             $this->getHttpClientFromConfig($config),
