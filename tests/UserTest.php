@@ -475,11 +475,10 @@ class UserTest extends \PHPUnit_Framework_TestCase
         ]);
 
         $handlerStack = HandlerStack::create($mockHandler);
-        $client = new UserClient(array_merge([
+        return new UserClient(array_merge([
             'http_client_options' => [
                 'handler' => $handlerStack,
             ]
         ], $config));
-        return $client;
     }
 }
