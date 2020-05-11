@@ -5,14 +5,13 @@
   "keywords": ["zoom"],
   "license": "MIT",
   "require": {
-    "php": ">=5.4.0",
-    "guzzlehttp/guzzle": "~5.0",
-    "guzzlehttp/log-subscriber": "^1.0",
-    "guzzlehttp/retry-subscriber": "^2.0",
-    "guzzlehttp/guzzle-services": "^0.5.0"
+    "php": ">=7.2.0",
+    "guzzlehttp/guzzle-services": "*"
   },
   "require-dev": {
-    "phpunit/phpunit": "~4.0"
+    "ext-json": "*",
+    "phpunit/phpunit": "~4.0",
+    "roave/security-advisories": "dev-master"
   },
   "authors": [
     {

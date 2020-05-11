@@ -4,17 +4,16 @@ namespace tests;
 include __DIR__ . '/../vendor/autoload.php';
 
 use Zoom\UserClient;
-use GuzzleHttp\Subscriber\Mock;
-use GuzzleHttp\Message\Response;
-use GuzzleHttp\Stream\Stream;
+use GuzzleHttp\HandlerStack;
+use GuzzleHttp\Handler\MockHandler;
+use GuzzleHttp\Psr7\Response;
 
 class UserTest extends \PHPUnit_Framework_TestCase
 {
     public function testAutoCreate_mock_successful()
     {
         // Arrange:
-        $userClient = $this->getUserClient();
-        $mockBody = Stream::factory(json_encode([
+        $mockBody = json_encode([
             'email' => 'test@abc.com',
             'id' => 'dsfs23css23',
             'created_at' => '2012-11-25T12:00:00Z',
@@ -41,11 +40,8 @@ class UserTest extends \PHPUnit_Framework_TestCase
             'disable_jbh_reminder' => true,
             'dept' => 'Engineer',
             'token' => ''
-        ]));
-        $mock = new Mock([
-            new Response(200, [], $mockBody),
         ]);
-        $userClient->getHttpClient()->getEmitter()->attach($mock);
+        $userClient = $this->getMockClient($mockBody);
 
         // Act:
         $result = $userClient->autoCreate([
@@ -73,17 +69,13 @@ class UserTest extends \PHPUnit_Framework_TestCase
     public function testAutoCreate_mock_userAlreadyExists()
     {
         // Arrange:
-        $userClient = $this->getUserClient();
-        $mockBody = Stream::factory(json_encode([
+        $mockBody = json_encode([
             'error' => [
                 'code' => 1000,
                 'message' => 'User already in the account: test@abc.com',
             ]
-        ]));
-        $mock = new Mock([
-            new Response(200, [], $mockBody),
         ]);
-        $userClient->getHttpClient()->getEmitter()->attach($mock);
+        $userClient = $this->getMockClient($mockBody);
 
         // Act:
         $result = $userClient->autoCreate([
@@ -121,14 +113,10 @@ class UserTest extends \PHPUnit_Framework_TestCase
     public function testCheckEmail_mock()
     {
         // Arrange:
-        $userClient = $this->getUserClient();
-        $mockBody = Stream::factory(json_encode([
+        $mockBody = json_encode([
             'existed_email' => true,
-        ]));
-        $mock = new Mock([
-            new Response(200, [], $mockBody),
         ]);
-        $userClient->getHttpClient()->getEmitter()->attach($mock);
+        $userClient = $this->getMockClient($mockBody);
 
         // Act:
         $result = $userClient->checkEmail([
@@ -150,16 +138,12 @@ class UserTest extends \PHPUnit_Framework_TestCase
     public function testDelete_mock_success()
     {
         // Arrange:
-        $userClient = $this->getUserClient();
-        $mockBody = Stream::factory(json_encode([
+        $mockBody = json_encode([
             'id' => '65q23kd9sqliy612h23k',
             'account_id' => '562q23kd9sqliy612h78k',
             'deleted_at' => '2012-11-25T12:00:00Z',
-        ]));
-        $mock = new Mock([
-            new Response(200, [], $mockBody),
         ]);
-        $userClient->getHttpClient()->getEmitter()->attach($mock);
+        $userClient = $this->getMockClient($mockBody);
 
         // Act:
         $result = $userClient->delete([
@@ -186,17 +170,13 @@ class UserTest extends \PHPUnit_Framework_TestCase
     public function testDelete_mock_noSuchUser()
     {
         // Arrange:
-        $userClient = $this->getUserClient();
-        $mockBody = Stream::factory(json_encode([
+        $mockBody = json_encode([
             'error' => [
                 'code' => 1001,
                 'message' => 'User not exist: 65q23kd9sqliy612h23k',
             ],
-        ]));
-        $mock = new Mock([
-            new Response(200, [], $mockBody),
         ]);
-        $userClient->getHttpClient()->getEmitter()->attach($mock);
+        $userClient = $this->getMockClient($mockBody);
 
         // Act:
         $result = $userClient->delete([
@@ -235,8 +215,7 @@ class UserTest extends \PHPUnit_Framework_TestCase
     public function testGet_mock()
     {
         // Arrange:
-        $userClient = $this->getUserClient();
-        $mockBody = Stream::factory(json_encode([
+        $mockBody = json_encode([
             'email' => 'test@abc.com',
             'id' => 'dsfs23css23',
             'account_id' => '8af3444232345',
@@ -265,11 +244,8 @@ class UserTest extends \PHPUnit_Framework_TestCase
             'dept' => 'Engineer',
             'timezone' => 'America/Los_Angeles',
             'token' => 'adlfjadslfkjasdkljfkjalkadfskjdsafkjdfsajkllajsdfaljsdf'
-        ]));
-        $mock = new Mock([
-            new Response(200, [], $mockBody),
         ]);
-        $userClient->getHttpClient()->getEmitter()->attach($mock);
+        $userClient = $this->getMockClient($mockBody);
 
         // Act:
         $result = $userClient->get([
@@ -296,8 +272,7 @@ class UserTest extends \PHPUnit_Framework_TestCase
     public function testGetByEmail_mock()
     {
         // Arrange:
-        $userClient = $this->getUserClient();
-        $mockBody = Stream::factory(json_encode([
+        $mockBody = json_encode([
             'email' => 'test@abc.com',
             'id' => 'dsfs23css23',
             'account_id' => '8af3444232345',
@@ -326,11 +301,8 @@ class UserTest extends \PHPUnit_Framework_TestCase
             'dept' => 'Engineer',
             'timezone' => 'America/Los_Angeles',
             'token' => 'adlfjadslfkjasdkljfkjalkadfskjdsafkjdfsajkllajsdfaljsdf'
-        ]));
-        $mock = new Mock([
-            new Response(200, [], $mockBody),
         ]);
-        $userClient->getHttpClient()->getEmitter()->attach($mock);
+        $userClient = $this->getMockClient($mockBody);
 
         // Act:
         $result = $userClient->getByEmail([
@@ -366,7 +338,7 @@ class UserTest extends \PHPUnit_Framework_TestCase
             'api_secret' => $realTestData['api_secret'],
             'http_client_options' => $realTestData['http_client_options'],
         ]);
-        
+
         // Act:
         $result = $userClient->getByEmail([
             'email' => $nonExistentEmail,
@@ -444,15 +416,11 @@ class UserTest extends \PHPUnit_Framework_TestCase
     public function testUpdate_mock()
     {
         // Arrange:
-        $userClient = $this->getUserClient();
-        $mockBody = Stream::factory(json_encode([
+        $mockBody = json_encode([
             'id' => 'dsfs23css23',
             'updated_at' => '2013-09-02T12:00:00Z'
-        ]));
-        $mock = new Mock([
-            new Response(200, [], $mockBody),
         ]);
-        $userClient->getHttpClient()->getEmitter()->attach($mock);
+        $userClient = $this->getMockClient($mockBody);
 
         // Act:
         $result = $userClient->update([
@@ -480,12 +448,12 @@ class UserTest extends \PHPUnit_Framework_TestCase
     private function getRealTestDataFor($methodName)
     {
         $testDataFilePath = __DIR__ . '/real-test-data.local.php';
-        
+
         $this->assertFileExists(
             $testDataFilePath,
             'The file with real test data was not found. Please see README.md.'
         );
-        
+
         $fullData = require $testDataFilePath;
         return $fullData[$methodName];
     }
@@ -494,7 +462,24 @@ class UserTest extends \PHPUnit_Framework_TestCase
     {
         $testConfig = include __DIR__ . '/config-test.php';
         $config = array_replace_recursive($testConfig, $extra);
-        
+
         return new UserClient($config);
+    }
+
+    private function getMockClient(string $mockBody) : UserClient
+    {
+        $config = include __DIR__ . '/config-test.php';
+
+        $mockHandler = new MockHandler([
+            new Response(200, [], $mockBody),
+        ]);
+
+        $handlerStack = HandlerStack::create($mockHandler);
+        $client = new UserClient(array_merge([
+            'http_client_options' => [
+                'handler' => $handlerStack,
+            ]
+        ], $config));
+        return $client;
     }
 }
