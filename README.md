@@ -1,3 +1,5 @@
+# ⛔️ This repository is no longer maintained. ⛔️
+
 # zoom-php-client #
 PHP client to interact with the [Zoom](https://zoom.us/) API.
 
